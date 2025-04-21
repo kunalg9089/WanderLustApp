@@ -1,0 +1,80 @@
+<% layout("/layouts/boilerplate") %>
+
+    <body>
+        <div class="row mt-3">
+            <div class="col-8 offset-2">
+                <br><br>
+                <h3>Edit your Listing</h3>
+                <form action="/listings/<%=listing._id%>" method="POST" novalidate class="needs-validation">
+                    <input type="hidden" name="_method" value="PUT">
+                    <div class="form-title mb-3">
+                        <label for="title" class="form-label mb-0">Title</label>
+                        <input type="text" id="title" class="form-control" name="listing[title]" required
+                            value="<%=listing.title%>">
+                            <div class="valid-feedback">Title looks good!</div>
+
+
+                    </div>
+
+                    <div class="form-description mb-3">
+                        <label for="description" class="form-label mb-0">Description</label>
+
+                        <textarea type="text" id="description" class="form-control" name="listing[description]" required
+                            ><%=listing.description%> </textarea>
+                            <div class="valid-feedback">Please enter a short description</div>
+
+
+                    </div>
+
+                    <div class="form-image mb-3">
+                        <label for="image" class="form-label mb-0">Image</label>
+                        <input type="text" id="image" class="form-control" name="listing[image]" required
+                            value="<%=listing.image.url%>" required>
+                            <div class="valid-feedback">Please enter a valid Link for image</div>
+
+
+                    </div>
+
+                    <div class="row">
+
+                    <div class="col-md-4 form-price mb-3">
+                        <label for="price" class="form-label mb-0">Price</label>
+
+                        <input type="number" id="price" class="form-control" name="listing[price]"
+                            value="<%=listing.price%>" required>
+
+                            <div class="valid-feedback">Price should be valid!</div>
+
+
+                    </div>
+
+                    <div class="col-md-8 form-country mb-3">
+                        <label for="country" class="form-label mb-0">Country</label>
+
+                        <input type="text" id="country" class="form-control" name="listing[country]"
+                            value="<%=listing.country%>" required>
+                            <div class="valid-feedback">Enter valid Country name</div>
+
+                    </div>
+
+                    </div>
+
+                    <div class="form-location mb-3">
+                        <label for="location" class="form-label mb-0">Location</label>
+                        <input type="text" id="location" class="form-control" name="listing[location]"
+                            value="<%=listing.location%>" required>
+                            <div class="valid-feedback">Location should be valid</div>
+
+                    </div>
+
+                    
+                    <button class="btn btn-dark edit-btn mt-3">Edit</button>
+                </form>
+            </div>
+        </div>
+        <!-- here writing the name as object[key] will create an object inside the req.body of the object in the memory in the temp and in that created object all this key is present with their respective values. -->
+
+        <!-- In HTML, using the `name` attribute in the format of this format of the key in this context after being loaded in the menory and connect e `object[key]` will create an object inside the `req.body` object. This created object will contain the specified `key` properties with their respective values. -->
+
+        <script src="/js/script.js"></script>
+    </body>
