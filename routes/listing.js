@@ -4,8 +4,10 @@ const wrapAsync = require("../utils/wrapAsync.js");
 const ExpressError = require("../utils/ExpressError.js");
 const Listing = require("../models/listing.js");
 const { isLoggedIn, isOwner, validateListing } = require("../middleware.js");
-
 const listingController = require("../controllers/listings.js");
+const multer = require('multer')
+const {storage} = require("../cloudConfig.js");
+const upload = multer({storage});
 
 // Joi validation for listing creation and updates
 const Joi = require("joi");
@@ -33,7 +35,10 @@ const listingSchema = Joi.object({
 router.route("/")
 .get(wrapAsync(listingController.index))
 
-.post(isLoggedIn, wrapAsync(listingController.createListing));
+// .post(isLoggedIn, wrapAsync(listingController.createListing));
+.post(upload.single('listing[image]'),(req,res) => {
+    res.send(req.file);
+});
 
 
 // New Route - Show form to create a new listing
