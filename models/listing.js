@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Review = require("./review.js");
+const { required } = require("joi");
 
 const listingSchema = new Schema({
     title: {
@@ -13,18 +14,8 @@ const listingSchema = new Schema({
         trim: true
     },
     image: {
-        filename: {
-            type: String,
-            default: "listingimage"
-        },
-        url: {
-            type: String,
-            default: "https://pixabay.com/photos/coast-landscape-nature-ocean-sea-1867704/",
-            set: (v) =>
-                v === ""
-                    ? "https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmVhY2glMjBob3VzZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"
-                    : v,
-        },
+        url: String,
+        filename: String
     },
     price: {
         type: Number,
@@ -48,6 +39,17 @@ const listingSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "User",
     },
+    geometry:  {
+    type: {
+      type: String, // Don't do `{ location: { type: String } }`
+      enum: ['Point'], // 'location.type' must be 'Point'
+      required: true
+    },
+    coordinates: {
+      type: [Number],
+      required: true
+    }
+  }
 });
 
 // Middleware to delete associated reviews when a listing is deleted

@@ -1,26 +1,32 @@
-const mongoose = require("mongoose");
-const initData = require("./data.js");
-const Listing = require("../models/listing.js");
+// seeds/index.js
 
-const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+const mongoose = require("mongoose");
+const Listing = require("../models/listing"); // Import the Listing model
+const initData = require("./data"); // Import your seed data
 
 main()
   .then(() => {
-    console.log("connected to DB");
+    console.log("Database connected");
   })
   .catch((err) => {
-    console.log(err);
+    console.error("Connection error:", err);
   });
 
 async function main() {
-  await mongoose.connect(MONGO_URL);
+  await mongoose.connect("mongodb://127.0.0.1:27017/wanderlust");
 }
 
+// Seed the database
 const initDB = async () => {
-  await Listing.deleteMany({});
-  initData.data = initData.data.map((obj) => ({...obj, owner: "680f2f36a14688c6875920fd" }));
-  await Listing.insertMany(initData.data);
-  console.log("data was initialized");
+  try {
+    await Listing.deleteMany({}); // Clear existing listings
+    await Listing.insertMany(initData.data); // Insert seed listings
+    console.log("Data was initialized successfully.");
+  } catch (error) {
+    console.error("Error seeding database:", error);
+  } finally {
+    mongoose.connection.close(); // Always close the connection
+  }
 };
 
 initDB();

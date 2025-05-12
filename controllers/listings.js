@@ -1,4 +1,8 @@
 const Listing = require("../models/listing");
+const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
+const mapToken = process.env.MAP_TOKEN;
+const geocodingClient = mbxGeocoding({ accessToken: mapToken });
+
 
 module.exports.index = async (req, res) => {
     const allListings = await Listing.find({});
@@ -22,19 +26,23 @@ module.exports.showListing = async (req, res) => {
 }
 
 
-module.exports.createListing = async (req, res) => {
+module.exports.createListing = async (req, res,next) => {
+let response = await geocodingClient.forwardGeocode({
+  query: req.body.listing.location,
+  limit: 1
+})
+  .send()
+    let url = req.file.path;
+    let filename = req.file.filename;
     const { listing } = req.body;
   
-    const newListing = new Listing({
-      ...listing,
-      owner: req.user._id,
-      image: {
-        url: listing.image
-      }
-    });
-  
-    await newListing.save();
-  
+    const newListing =new Listing(req.body.listing);
+    newListing.owner = req.user._id;
+    newListing.image = {url,filename};
+    newListing.geometry = response.body.features[0].geometry;
+
+    let savedlisting = await newListing.save();
+    console.log(savedlisting);
     req.flash("success", "New Listing Created!");
     res.redirect("/listings");
   };
@@ -47,14 +55,23 @@ module.exports.renderEditForm = async (req, res) => {
         req.flash("error", "Listing you requested for does not exist!");
         return res.redirect("/listings");
     }
+
+    let originalImageUrl = listing.image.url;
+    originalImageUrl.replace("/upload","/upload/w_250")
     res.render("listings/edit.ejs", { listing });
-}
+};
 
 
 module.exports.updateListing = async (req, res) => {
     const { id } = req.params;
     const listing = await Listing.findById(id);
 
+    if(typeof req.file !== "undefined"){
+    let url = req.file.path;
+    let filename = req.file.filename;
+    listing.image = {url,filename};
+    await listing.save();
+    }
     if (!listing) {
         req.flash("error", "Listing not found!");
         return res.redirect("/listings");
