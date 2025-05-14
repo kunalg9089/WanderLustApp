@@ -82,9 +82,9 @@ app.use((req, res, next) => {
 });
 
 // Root Route
-app.get("/", (req, res) => {
-    res.send("Hi, I am Root");
-});
+// app.get("/", (req, res) => {
+//     res.send("Hi, I am Root");
+// });
 
 // Routes
 app.use("/listings", listingRouter);
