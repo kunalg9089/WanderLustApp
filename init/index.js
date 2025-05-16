@@ -21,7 +21,7 @@ const initDB = async () => {
   try {
     await Listing.deleteMany({}); // Clear existing listings
     await Listing.insertMany(initData.data); // Insert seed listings
-    console.log("Data was initialized successfully.");
+    console.log("Data was inititlaized successfully.");
   } catch (error) {
     console.error("Error seeding database:", error);
   } finally {
