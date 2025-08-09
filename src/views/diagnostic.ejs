@@ -1,0 +1,313 @@
+<% layout("layouts/boilerplate") %>
+
+<style>
+    .diagnostic-container {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+        padding: 40px 0;
+    }
+
+    .diagnostic-card {
+        background: white;
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+
+    .diagnostic-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .issue-section {
+        margin: 20px 0;
+        padding: 20px;
+        border-radius: 12px;
+        border-left: 4px solid #667eea;
+        background: #f8f9fa;
+    }
+
+    .issue-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 10px;
+    }
+
+    .issue-description {
+        color: #7f8c8d;
+        margin-bottom: 15px;
+    }
+
+    .solution-steps {
+        background: #e8f4fd;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 10px 0;
+    }
+
+    .solution-steps ol {
+        margin: 0;
+        padding-left: 20px;
+    }
+
+    .solution-steps li {
+        margin: 8px 0;
+        color: #2c3e50;
+    }
+
+    .test-button {
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        margin: 5px;
+        transition: all 0.3s ease;
+    }
+
+    .test-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    .status-indicator {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin-right: 8px;
+    }
+
+    .status-working {
+        background: #2ecc71;
+    }
+
+    .status-issue {
+        background: #e74c3c;
+    }
+
+    .status-warning {
+        background: #f39c12;
+    }
+
+    .code-block {
+        background: #2c3e50;
+        color: #ecf0f1;
+        padding: 15px;
+        border-radius: 8px;
+        font-family: monospace;
+        font-size: 0.9rem;
+        margin: 10px 0;
+        overflow-x: auto;
+    }
+
+    .performance-tips {
+        background: #fff3cd;
+        border: 1px solid #ffeaa7;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+    }
+
+    .performance-tips h4 {
+        color: #856404;
+        margin-bottom: 10px;
+    }
+
+    .performance-tips ul {
+        margin: 0;
+        padding-left: 20px;
+    }
+
+    .performance-tips li {
+        color: #856404;
+        margin: 5px 0;
+    }
+</style>
+
+<div class="diagnostic-container">
+    <div class="container">
+        <div class="diagnostic-card">
+            <h1 class="diagnostic-title">🔧 System Diagnostic</h1>
+            
+            <div class="issue-section">
+                <h3 class="issue-title">
+                    <span class="status-indicator status-issue"></span>
+                    Issue 1: Listing Update Not Working
+                </h3>
+                <p class="issue-description">
+                    The listing update functionality keeps loading without completing the update.
+                </p>
+                <div class="solution-steps">
+                    <h4>Solution:</h4>
+                    <ol>
+                        <li><strong>Check Server Logs:</strong> Look for error messages in your terminal/console</li>
+                        <li><strong>Verify Database Connection:</strong> Ensure MongoDB is connected</li>
+                        <li><strong>Check File Upload:</strong> If updating image, ensure upload directory exists</li>
+                        <li><strong>Test with Simple Update:</strong> Try updating only text fields first</li>
+                        <li><strong>Clear Browser Cache:</strong> Hard refresh (Ctrl+F5) the page</li>
+                    </ol>
+                </div>
+                <button class="test-button" onclick="testListingUpdate()">Test Listing Update</button>
+            </div>
+
+            <div class="issue-section">
+                <h3 class="issue-title">
+                    <span class="status-indicator status-issue"></span>
+                    Issue 2: Slow/Laggy Scrolling
+                </h3>
+                <p class="issue-description">
+                    Scrolling through pages feels slow and unresponsive.
+                </p>
+                <div class="performance-tips">
+                    <h4>Performance Optimizations Applied:</h4>
+                    <ul>
+                        <li>✅ Hardware acceleration enabled</li>
+                        <li>✅ Optimized CSS animations</li>
+                        <li>✅ Reduced repaints and reflows</li>
+                        <li>✅ Touch scrolling optimized</li>
+                        <li>✅ Image loading optimized</li>
+                    </ul>
+                </div>
+                <div class="solution-steps">
+                    <h4>Additional Steps:</h4>
+                    <ol>
+                        <li><strong>Clear Browser Cache:</strong> Remove cached files</li>
+                        <li><strong>Disable Extensions:</strong> Try in incognito mode</li>
+                        <li><strong>Check Device Performance:</strong> Close other applications</li>
+                        <li><strong>Update Browser:</strong> Use latest browser version</li>
+                    </ol>
+                </div>
+                <button class="test-button" onclick="testScrolling()">Test Scrolling Performance</button>
+            </div>
+
+            <div class="issue-section">
+                <h3 class="issue-title">
+                    <span class="status-indicator status-warning"></span>
+                    Issue 3: Payment Option Not Visible
+                </h3>
+                <p class="issue-description">
+                    The payment functionality is not appearing or working properly.
+                </p>
+                <div class="solution-steps">
+                    <h4>Checklist:</h4>
+                    <ol>
+                        <li><strong>Environment Variables:</strong> Verify Razorpay keys in .env file</li>
+                        <li><strong>User Authentication:</strong> Ensure you're logged in</li>
+                        <li><strong>Browser Console:</strong> Check for JavaScript errors</li>
+                        <li><strong>Network Connection:</strong> Ensure Razorpay script loads</li>
+                        <li><strong>Test Payment Page:</strong> Visit /test-payment for diagnostics</li>
+                    </ol>
+                </div>
+                <button class="test-button" onclick="testPayment()">Test Payment System</button>
+                <button class="test-button" onclick="window.open('/test-payment', '_blank')">Open Payment Test Page</button>
+            </div>
+
+            <div class="issue-section">
+                <h3 class="issue-title">
+                    <span class="status-indicator status-working"></span>
+                    Quick Fixes
+                </h3>
+                <div class="solution-steps">
+                    <h4>Immediate Actions:</h4>
+                    <ol>
+                        <li><strong>Restart Server:</strong> <code>npm start</code></li>
+                        <li><strong>Clear Browser Cache:</strong> Ctrl+F5 (Windows) or Cmd+Shift+R (Mac)</li>
+                        <li><strong>Check .env File:</strong> Ensure all required variables are set</li>
+                        <li><strong>Test in Incognito:</strong> Open in private/incognito mode</li>
+                        <li><strong>Update Dependencies:</strong> <code>npm update</code></li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="issue-section">
+                <h3 class="issue-title">
+                    <span class="status-indicator status-working"></span>
+                    Environment Check
+                </h3>
+                <div id="envStatus">
+                    <p>Checking environment configuration...</p>
+                </div>
+                <button class="test-button" onclick="checkEnvironment()">Check Environment</button>
+            </div>
+
+            <div class="issue-section">
+                <h3 class="issue-title">
+                    <span class="status-indicator status-working"></span>
+                    Debug Information
+                </h3>
+                <div class="code-block" id="debugInfo">
+                    Loading debug information...
+                </div>
+                <button class="test-button" onclick="getDebugInfo()">Refresh Debug Info</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function testListingUpdate() {
+        alert('To test listing update:\n1. Go to /listings\n2. Click "Edit" on any listing\n3. Make a small change\n4. Submit the form\n5. Check browser console for errors');
+    }
+
+    function testScrolling() {
+        alert('Scrolling performance has been optimized.\nIf still slow:\n1. Clear browser cache\n2. Try incognito mode\n3. Close other browser tabs\n4. Check device performance');
+    }
+
+    function testPayment() {
+        if (typeof Razorpay !== 'undefined') {
+            alert('✅ Razorpay is loaded!\n\nTo test payment:\n1. Go to /listings\n2. Click "Book Now"\n3. Fill booking details\n4. Click "Proceed to Payment"');
+        } else {
+            alert('❌ Razorpay not loaded!\n\nCheck:\n1. Internet connection\n2. Browser console for errors\n3. Razorpay script loading');
+        }
+    }
+
+    async function checkEnvironment() {
+        const envStatus = document.getElementById('envStatus');
+        envStatus.innerHTML = '<p>Checking environment...</p>';
+        
+        try {
+            const response = await fetch('/api/test');
+            const data = await response.json();
+            
+            let statusHtml = '<h4>Environment Status:</h4>';
+            statusHtml += `<p><strong>Server:</strong> <span style="color: green;">✅ Online</span></p>`;
+            statusHtml += `<p><strong>Razorpay:</strong> <span style="color: ${data.razorpay_configured ? 'green' : 'red'};">${data.razorpay_configured ? '✅ Configured' : '❌ Not Configured'}</span></p>`;
+            statusHtml += `<p><strong>User:</strong> <span style="color: ${data.user !== 'Not logged in' ? 'green' : 'red'};">${data.user !== 'Not logged in' ? '✅ Authenticated' : '❌ Not Logged In'}</span></p>`;
+            
+            envStatus.innerHTML = statusHtml;
+        } catch (error) {
+            envStatus.innerHTML = '<p style="color: red;">❌ Error checking environment: ' + error.message + '</p>';
+        }
+    }
+
+    function getDebugInfo() {
+        const debugInfo = document.getElementById('debugInfo');
+        
+        const info = {
+            userAgent: navigator.userAgent,
+            screenResolution: screen.width + 'x' + screen.height,
+            windowSize: window.innerWidth + 'x' + window.innerHeight,
+            razorpayLoaded: typeof Razorpay !== 'undefined',
+            cookiesEnabled: navigator.cookieEnabled,
+            online: navigator.onLine,
+            language: navigator.language,
+            platform: navigator.platform,
+            timestamp: new Date().toISOString()
+        };
+        
+        debugInfo.textContent = JSON.stringify(info, null, 2);
+    }
+
+    // Auto-run checks on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        checkEnvironment();
+        getDebugInfo();
+    });
+</script> 

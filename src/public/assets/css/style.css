@@ -1,0 +1,874 @@
+/* 🚀 ULTRA HIGH-PERFORMANCE OPTIMIZATIONS 🚀 */
+
+/* Critical Performance Foundation */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    /* Optimize font loading */
+    font-display: swap;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    overflow-x: hidden;
+    /* Ultra-smooth scrolling */
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    /* Optimize rendering */
+    text-rendering: optimizeSpeed;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* 🚀 GPU Acceleration for Critical Elements */
+.listing-card, 
+.search-section, 
+.navbar,
+.modal-overlay,
+.card-img-top {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    will-change: transform;
+}
+
+/* 🚀 Lazy Loading Image Optimizations */
+.lazy-image {
+    transition: opacity 0.3s ease-in-out;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+}
+
+.lazy-image.loaded {
+    animation: none;
+    background: none;
+}
+
+.lazy-image.error {
+    animation: none;
+    background: #f8f9fa;
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+/* 🚀 Enhanced Navbar Animations */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+/* 🚀 Performance-Optimized Loading Skeletons */
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+    border-radius: 4px;
+}
+
+.skeleton-card {
+    height: 250px;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.skeleton-text {
+    height: 16px;
+    margin-bottom: 8px;
+}
+
+.skeleton-text.title {
+    height: 20px;
+    width: 80%;
+}
+
+.skeleton-text.subtitle {
+    height: 14px;
+    width: 60%;
+}
+
+/* Optimize images */
+img {
+    max-width: 100%;
+    height: auto;
+    /* Prevent layout shifts */
+    aspect-ratio: attr(width) / attr(height);
+}
+
+/* Optimize cards and containers */
+.card, .listing-card, .booking-card {
+    /* Use hardware acceleration */
+    transform: translateZ(0);
+    will-change: transform;
+    /* Optimize repaints */
+    contain: layout style paint;
+}
+
+/* Optimize hover effects */
+.card:hover, .listing-card:hover, .booking-card:hover {
+    /* Use transform instead of margin/padding for better performance */
+    transform: translateY(-5px) translateZ(0);
+}
+
+/* Optimize gradients and backgrounds */
+.gradient-bg {
+    /* Use simpler gradients for better performance */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    /* Prevent repaints */
+    will-change: auto;
+}
+
+/* Optimize modals */
+.modal-overlay {
+    /* Use transform for better performance */
+    transform: translateZ(0);
+    /* Optimize backdrop filter */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+/* Optimize animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px) translateZ(0); }
+    to { opacity: 1; transform: translateY(0) translateZ(0); }
+}
+
+@keyframes slideIn {
+    from { transform: translateX(-100%) translateZ(0); }
+    to { transform: translateX(0) translateZ(0); }
+}
+
+/* Optimize loading states */
+.loading {
+    /* Use simpler animations */
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Optimize scrolling containers */
+.scroll-container {
+    /* Enable smooth scrolling */
+    scroll-behavior: smooth;
+    /* Optimize for touch devices */
+    -webkit-overflow-scrolling: touch;
+    /* Prevent horizontal scroll */
+    overflow-x: hidden;
+}
+
+/* Alert/Flash Message Styling */
+.alert {
+    position: relative;
+    z-index: 1050;
+    margin: 1rem auto;
+    max-width: 600px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    font-weight: 500;
+    animation: slideDown 0.3s ease-out;
+    /* Ensure proper containment */
+    overflow: visible;
+    box-sizing: border-box;
+    /* Proper padding to accommodate close button */
+    padding: 1rem 1rem 1rem 1rem;
+}
+
+.alert-success {
+    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    color: #155724;
+    border-left: 4px solid #28a745;
+}
+
+.alert-danger {
+    background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+    color: #721c24;
+    border-left: 4px solid #dc3545;
+}
+
+.alert-warning {
+    background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+    color: #856404;
+    border-left: 4px solid #ffc107;
+}
+
+.alert-info {
+    background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+    color: #0c5460;
+    border-left: 4px solid #17a2b8;
+}
+
+.alert-dismissible {
+    padding-right: 3rem;
+}
+
+.btn-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    font-size: 1rem;
+    font-weight: bold;
+    color: #666;
+    opacity: 0.8;
+    cursor: pointer;
+    padding: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    /* Ensure button stays within alert boundaries */
+    box-sizing: border-box;
+    z-index: 1;
+}
+
+.btn-close:hover {
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 1);
+    transform: scale(1.1);
+    color: #333;
+}
+
+.btn-close:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.btn-close span {
+    line-height: 1;
+    font-size: 0.875rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Ensure alerts don't overlap with other elements */
+.container .alert {
+    position: relative;
+    z-index: 1050;
+}
+
+/* Fix for logout notification overlap */
+.alert:not(:empty) {
+    margin-bottom: 1rem;
+}
+
+/* Ensure proper spacing between multiple alerts */
+.alert + .alert {
+    margin-top: 0.5rem;
+}
+
+/* Flash Messages Container */
+.flash-messages-container {
+    position: relative;
+    z-index: 1050;
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Alert Text Styling */
+.alert-text {
+    display: block;
+    width: 100%;
+    word-wrap: break-word;
+    line-height: 1.4;
+    margin: 0;
+    padding: 0;
+    /* Ensure text doesn't overlap with close button */
+    padding-right: 2rem;
+    box-sizing: border-box;
+}
+
+/* Ensure alert content doesn't overlap with close button */
+.alert.alert-dismissible {
+    display: block;
+    position: relative;
+    min-height: 3rem;
+}
+
+.alert.alert-dismissible .alert-text {
+    padding-right: 2rem;
+    margin-right: 0;
+}
+
+/* Alerts without close button (like login/signup messages) */
+.alert:not(.alert-dismissible) {
+    padding: 1rem;
+}
+
+.alert:not(.alert-dismissible) .alert-text {
+    padding-right: 0;
+    text-align: center;
+}
+
+/* Responsive adjustments for alerts */
+@media (max-width: 768px) {
+    .alert {
+        margin: 0.5rem 1rem;
+        font-size: 0.9rem;
+        padding: 0.75rem 0.75rem 0.75rem 0.75rem;
+    }
+    
+    .alert-text {
+        width: 100%;
+        padding-right: 1.5rem;
+    }
+    
+    .btn-close {
+        top: 0.5rem;
+        right: 0.5rem;
+        width: 1.25rem;
+        height: 1.25rem;
+        font-size: 0.75rem;
+    }
+    
+    .btn-close span {
+        font-size: 0.75rem;
+    }
+}
+
+/* Optimize grid layouts */
+.grid-container {
+    /* Use CSS Grid for better performance */
+    display: grid;
+    gap: 20px;
+    /* Optimize repaints */
+    contain: layout style;
+}
+
+/* Optimize text rendering */
+h1, h2, h3, h4, h5, h6 {
+    /* Optimize font rendering */
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "liga" 1, "kern" 1;
+}
+
+/* Optimize buttons */
+.btn, button {
+    /* Use transform for hover effects */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    /* Prevent text selection */
+    user-select: none;
+    /* Optimize touch targets */
+    min-height: 44px;
+    min-width: 44px;
+    /* Ensure proper text alignment */
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    /* Proper padding and spacing */
+    padding: 8px 16px !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    /* Ensure text stays within button */
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    /* Proper border and background */
+    border: none !important;
+    border-radius: 8px !important;
+    /* Ensure proper color contrast */
+    color: white !important;
+    background-color: #fe424d !important;
+}
+
+.btn:hover, button:hover {
+    transform: translateY(-2px) translateZ(0);
+    background-color: #e63946 !important;
+    color: white !important;
+    box-shadow: 0 4px 8px rgba(254, 66, 77, 0.3) !important;
+}
+
+.btn:focus, button:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(254, 66, 77, 0.2) !important;
+}
+
+/* Specific button styles */
+.btn-primary {
+    background-color: #fe424d !important;
+    color: white !important;
+}
+
+.btn-primary:hover {
+    background-color: #e63946 !important;
+    color: white !important;
+}
+
+.btn-success {
+    background-color: #28a745 !important;
+    color: white !important;
+}
+
+.btn-success:hover {
+    background-color: #218838 !important;
+    color: white !important;
+}
+
+.btn-danger {
+    background-color: #dc3545 !important;
+    color: white !important;
+}
+
+.btn-danger:hover {
+    background-color: #c82333 !important;
+    color: white !important;
+}
+
+.btn-warning {
+    background-color: #ffc107 !important;
+    color: #212529 !important;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800 !important;
+    color: #212529 !important;
+}
+
+.btn-info {
+    background-color: #17a2b8 !important;
+    color: white !important;
+}
+
+.btn-info:hover {
+    background-color: #138496 !important;
+    color: white !important;
+}
+
+.btn-secondary {
+    background-color: #6c757d !important;
+    color: white !important;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268 !important;
+    color: white !important;
+}
+
+.btn-light {
+    background-color: #f8f9fa !important;
+    color: #212529 !important;
+}
+
+.btn-light:hover {
+    background-color: #e2e6ea !important;
+    color: #212529 !important;
+}
+
+.btn-dark {
+    background-color: #343a40 !important;
+    color: white !important;
+}
+
+.btn-dark:hover {
+    background-color: #23272b !important;
+    color: white !important;
+}
+
+/* Button sizes */
+.btn-sm {
+    padding: 4px 12px !important;
+    font-size: 0.8rem !important;
+    min-height: 32px !important;
+    min-width: 32px !important;
+}
+
+.btn-lg {
+    padding: 12px 24px !important;
+    font-size: 1.1rem !important;
+    min-height: 56px !important;
+    min-width: 56px !important;
+}
+
+/* Book now button specific styling */
+.book-now-btn {
+    background: linear-gradient(45deg, #2ecc71, #27ae60) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 12px 24px !important;
+    font-weight: 600 !important;
+    font-size: 1rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    transition: all 0.3s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 48px !important;
+    min-width: 120px !important;
+    box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3) !important;
+}
+
+.book-now-btn:hover {
+    background: linear-gradient(45deg, #27ae60, #229954) !important;
+    color: white !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 25px rgba(46, 204, 113, 0.4) !important;
+}
+
+.book-now-btn:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.3) !important;
+}
+
+/* Proceed button styling */
+.proceed-btn {
+    background: linear-gradient(45deg, #2ecc71, #27ae60) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 15px 30px !important;
+    font-weight: 600 !important;
+    font-size: 1rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    transition: all 0.3s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 48px !important;
+    min-width: 150px !important;
+    box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3) !important;
+}
+
+.proceed-btn:hover {
+    background: linear-gradient(45deg, #27ae60, #229954) !important;
+    color: white !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 25px rgba(46, 204, 113, 0.4) !important;
+}
+
+.proceed-btn:disabled {
+    background: #95a5a6 !important;
+    color: white !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* Filter button styling */
+.filter {
+    background-color: #667eea !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 25px !important;
+    padding: 8px 20px !important;
+    font-weight: 500 !important;
+    font-size: 0.9rem !important;
+    transition: all 0.3s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 40px !important;
+    min-width: 80px !important;
+    margin: 5px !important;
+}
+
+.filter:hover {
+    background-color: #5a6fd8 !important;
+    color: white !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3) !important;
+}
+
+.filter.active {
+    background-color: #764ba2 !important;
+    color: white !important;
+    box-shadow: 0 4px 8px rgba(118, 75, 162, 0.3) !important;
+}
+
+/* Add listing button */
+.add-btn {
+    background-color: #fe424d !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 12px 24px !important;
+    font-weight: 600 !important;
+    font-size: 1rem !important;
+    transition: all 0.3s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 48px !important;
+    min-width: 120px !important;
+    box-shadow: 0 4px 15px rgba(254, 66, 77, 0.3) !important;
+}
+
+.add-btn:hover {
+    background-color: #e63946 !important;
+    color: white !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 25px rgba(254, 66, 77, 0.4) !important;
+}
+
+/* Edit button */
+.edit-btn {
+    background-color: #fe424d !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 8px 16px !important;
+    font-weight: 500 !important;
+    font-size: 0.9rem !important;
+    transition: all 0.3s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 40px !important;
+    min-width: 80px !important;
+}
+
+.edit-btn:hover {
+    background-color: #e63946 !important;
+    color: white !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 8px rgba(254, 66, 77, 0.3) !important;
+}
+
+/* Optimize forms */
+.form-control, input, select, textarea {
+    /* Optimize focus states */
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    /* Prevent zoom on mobile */
+    font-size: 16px;
+}
+
+/* Optimize navigation */
+.navbar {
+    /* Use fixed positioning for better performance */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    /* Solid white background - no transparency */
+    background-color: white !important;
+    /* Add subtle shadow for depth */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+    /* Ensure proper border */
+    border-bottom: 1px solid #e9ecef !important;
+    /* Remove any backdrop filter */
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* Ensure navbar brand is properly styled */
+.navbar-brand {
+    color: #fe424d !important;
+    font-weight: 600 !important;
+    font-size: 1.5rem !important;
+    text-decoration: none !important;
+}
+
+.navbar-brand:hover {
+    color: #e63946 !important;
+}
+
+/* Navbar links styling */
+.navbar-nav .nav-link {
+    color: #333 !important;
+    font-weight: 500 !important;
+    padding: 8px 16px !important;
+    border-radius: 8px !important;
+    transition: all 0.3s ease !important;
+    text-decoration: none !important;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #fe424d !important;
+    background-color: #f8f9fa !important;
+}
+
+/* Ensure proper navbar container */
+.navbar .container-fluid {
+    padding: 0 20px !important;
+}
+
+/* Navbar toggler for mobile */
+.navbar-toggler {
+    border: none !important;
+    padding: 4px 8px !important;
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 3px rgba(254, 66, 77, 0.2) !important;
+}
+
+/* Ensure navbar collapse works properly */
+.navbar-collapse {
+    justify-content: space-between !important;
+}
+
+/* Responsive navbar adjustments */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 10px 0 !important;
+    }
+    
+    .navbar-nav {
+        margin: 10px 0 !important;
+    }
+    
+    .navbar-nav .nav-link {
+        padding: 8px 12px !important;
+        margin: 2px 0 !important;
+    }
+}
+
+/* Optimize footer */
+.footer-container {
+    /* Use simpler animations */
+    animation: none;
+}
+
+/* Optimize responsive design */
+@media (max-width: 768px) {
+    /* Reduce animations on mobile for better performance */
+    .card:hover, .listing-card:hover, .booking-card:hover {
+        transform: none;
+    }
+    
+    /* Optimize touch interactions */
+    .btn, button {
+        /* Increase touch target size */
+        min-height: 48px;
+        min-width: 48px;
+    }
+}
+
+/* Optimize for high DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    /* Use higher quality images */
+    img {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+/* Optimize for reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+/* Optimize for dark mode */
+@media (prefers-color-scheme: dark) {
+    /* Add dark mode optimizations if needed */
+}
+
+/* Optimize print styles */
+@media print {
+    * {
+        /* Disable animations for printing */
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* Optimize focus management */
+:focus {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+}
+
+/* Optimize selection */
+::selection {
+    background: rgba(102, 126, 234, 0.3);
+    color: inherit;
+}
+
+/* Optimize scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #667eea;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #5a6fd8;
+}
+
+/* Optimize for better accessibility */
+@media (prefers-contrast: high) {
+    /* Increase contrast for better visibility */
+    .btn, button {
+        border: 2px solid currentColor;
+    }
+}
+
+/* Optimize for better performance on low-end devices */
+@media (max-width: 480px) {
+    /* Reduce complexity for mobile devices */
+    .gradient-bg {
+        background: #667eea;
+    }
+    
+    /* Simplify animations */
+    .card:hover, .listing-card:hover, .booking-card:hover {
+        transform: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+}

@@ -8,20 +8,21 @@ const mongoose = require("mongoose");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
-const wrapAsync = require("./utils/wrapAsync.js");
-const ExpressError = require("./utils/ExpressError.js");
-const { listingSchema, reviewSchema } = require("./schema.js");
+const wrapAsync = require("./src/app/utils/wrapAsync.js");
+const ExpressError = require("./src/app/utils/ExpressError.js");
+const { listingSchema, reviewSchema } = require("./src/config/schema.js");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
-const User = require("./models/user.js");
+const User = require("./src/app/models/user.js");
 
 // Route Imports
-const listingRouter = require("./routes/listing.js");
-const reviewRouter = require("./routes/review.js");
-const userRouter = require("./routes/user.js");
+const listingRouter = require("./src/app/routes/listing.js");
+const reviewRouter = require("./src/app/routes/review.js");
+const userRouter = require("./src/app/routes/user.js");
+const paymentRouter = require("./src/app/routes/payment.js");
 
 // MongoDB Connection
 const dbUrl = process.env.ATLASDB_URL;
@@ -41,13 +42,40 @@ async function main() {
 // View Engine Setup
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
+app.set("views", path.join(__dirname, "src/views"));
 
-// Middleware Setup
+// 🚀 High-Performance Middleware Setup
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json()); // Add JSON middleware for API routes
 app.use(methodOverride("_method"));
-app.use(express.static(path.join(__dirname, "public")));
-app.use("/uploads", express.static("uploads")); // serve image files if any
+
+// 🚀 Performance: Static file serving with aggressive caching
+app.use(express.static(path.join(__dirname, "src/public"), {
+    maxAge: '1y', // Cache static assets for 1 year
+    etag: false, // Disable ETags for better caching
+    lastModified: false, // Disable last-modified headers
+    setHeaders: (res, path) => {
+        // Set different cache strategies for different file types
+        if (path.endsWith('.html')) {
+            res.setHeader('Cache-Control', 'public, max-age=300'); // 5 minutes for HTML
+        } else if (path.endsWith('.css') || path.endsWith('.js')) {
+            res.setHeader('Cache-Control', 'public, max-age=31536000, immutable'); // 1 year for CSS/JS
+        } else if (path.match(/\.(jpg|jpeg|png|gif|ico|svg|webp)$/)) {
+            res.setHeader('Cache-Control', 'public, max-age=31536000, immutable'); // 1 year for images
+        }
+        // Add security headers
+        res.setHeader('X-Content-Type-Options', 'nosniff');
+        res.setHeader('X-Frame-Options', 'DENY');
+        res.setHeader('X-XSS-Protection', '1; mode=block');
+    }
+}));
+
+app.use("/uploads", express.static("uploads", {
+    maxAge: '1y',
+    setHeaders: (res, path) => {
+        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    }
+})); // serve image files if any
 
 // Session Store
 const store = MongoStore.create({
@@ -97,9 +125,19 @@ app.get("/", (req, res) => {
     res.redirect("/listings");
 });
 
+// Legal pages routes (must come before user routes)
+app.get("/privacy", (req, res) => {
+    res.render("legal/privacy");
+});
+
+app.get("/terms", (req, res) => {
+    res.render("legal/terms");
+});
+
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
+app.use("/api", paymentRouter); // Add payment routes
 
 // 404 Catch-all
 app.all("*", (req, res, next) => {

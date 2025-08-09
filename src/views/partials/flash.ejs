@@ -1,0 +1,49 @@
+<!-- Flash Messages -->
+<div class="flash-messages-container">
+    <% if (typeof success !== 'undefined' && success && success.length) { %>
+        <% 
+        // Ensure success is a string before calling toLowerCase()
+        const successMessage = typeof success === 'string' ? success : Array.isArray(success) ? success[0] : String(success);
+        
+        // Check if this is a login/signup/logout message to determine if we should show close button
+        const isLoginSignupMessage = successMessage.toLowerCase().includes('welcome') || 
+                                   successMessage.toLowerCase().includes('login') || 
+                                   successMessage.toLowerCase().includes('signup') || 
+                                   successMessage.toLowerCase().includes('registered') ||
+                                   successMessage.toLowerCase().includes('logged in') ||
+                                   successMessage.toLowerCase().includes('logged out') ||
+                                   successMessage.toLowerCase().includes('logout');
+        %>
+        <div class="alert alert-success <%= !isLoginSignupMessage ? 'alert-dismissible' : '' %> fade show" role="alert">
+            <div class="alert-text"><%= success %></div>
+            <% if (!isLoginSignupMessage) { %>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            <% } %>
+        </div>
+    <% } %>
+
+    <% if (typeof error !== 'undefined' && error && error.length) { %>
+        <% 
+        // Ensure error is a string before calling toLowerCase()
+        const errorMessage = typeof error === 'string' ? error : Array.isArray(error) ? error[0] : String(error);
+        
+        // Check if this is a login/signup/logout error message
+        const isLoginSignupError = errorMessage.toLowerCase().includes('login') || 
+                                 errorMessage.toLowerCase().includes('signup') || 
+                                 errorMessage.toLowerCase().includes('logout') ||
+                                 errorMessage.toLowerCase().includes('password') ||
+                                 errorMessage.toLowerCase().includes('username') ||
+                                 errorMessage.toLowerCase().includes('email');
+        %>
+        <div class="alert alert-danger <%= !isLoginSignupError ? 'alert-dismissible' : '' %> fade show" role="alert">
+            <div class="alert-text"><%= error %></div>
+            <% if (!isLoginSignupError) { %>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            <% } %>
+        </div>
+    <% } %>
+</div>

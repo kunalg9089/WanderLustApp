@@ -1,0 +1,297 @@
+<style>
+  /* Navbar styling - solid white background */
+  .navbar {
+    background-color: white !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid #e9ecef;
+  }
+
+
+
+  /* Navbar brand styling */
+  .navbar-brand {
+    font-size: 1.5rem !important;
+    color: #fe424d !important;
+    font-weight: 600 !important;
+  }
+
+  .navbar-brand i {
+    margin-right: 8px !important;
+  }
+
+  /* Navbar links styling */
+  .nav-link {
+    color: #333 !important;
+    font-weight: 500 !important;
+    padding: 8px 16px !important;
+    border-radius: 8px !important;
+    transition: all 0.3s ease !important;
+    margin: 0 2px !important;
+  }
+
+  .nav-link:hover {
+    color: #fe424d !important;
+    background-color: #f8f9fa !important;
+  }
+
+  .nav-link b {
+    font-weight: 600 !important;
+  }
+
+  /* Clean White Host button styling */
+  .host-btn {
+    background: white !important;
+    color: #333 !important;
+    border: 1px solid #ddd !important;
+    border-radius: 8px !important;
+    padding: 8px 16px !important;
+    font-weight: 500 !important;
+    font-size: 14px !important;
+    transition: all 0.2s ease !important;
+    text-decoration: none !important;
+    display: inline-block !important;
+  }
+
+  .host-btn:hover {
+    background: #f8f9fa !important;
+    color: #333 !important;
+    border-color: #ccc !important;
+    text-decoration: none !important;
+  }
+
+  .host-btn:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  /* 🚀 Enhanced Hamburger Menu Styling */
+  .navbar-toggler {
+    border: none !important;
+    padding: 6px 8px !important;
+    border-radius: 8px !important;
+    transition: all 0.3s ease !important;
+    background-color: transparent !important;
+  }
+
+  .navbar-toggler:focus {
+    box-shadow: 0 0 0 3px rgba(254, 66, 77, 0.2) !important;
+    outline: none !important;
+  }
+
+  .navbar-toggler:hover {
+    background-color: #f8f9fa !important;
+  }
+
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2833, 37, 41, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='m4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+  }
+
+  /* 🚀 Explore Button Enhanced Functionality */
+  .explore-btn {
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  .explore-btn::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent) !important;
+    transition: left 0.5s !important;
+  }
+
+  .explore-btn:hover::before {
+    left: 100% !important;
+  }
+
+  /* Enhanced Dropdown Menu Styling */
+  .dropdown-menu {
+    background: white !important;
+    border: 1px solid #e9ecef !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+    padding: 8px 0 !important;
+    margin-top: 5px !important;
+    min-width: 180px !important;
+  }
+
+  .dropdown-menu.show {
+    animation: dropdownSlideIn 0.2s ease-out !important;
+  }
+
+  @keyframes dropdownSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-5px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .dropdown-item {
+    padding: 12px 20px !important;
+    color: #333 !important;
+    font-weight: 500 !important;
+    transition: all 0.15s ease !important;
+    border-radius: 4px !important;
+    margin: 2px 8px !important;
+    font-size: 14px !important;
+  }
+
+  .dropdown-item:hover {
+    background-color: #f8f9fa !important;
+    color: #fe424d !important;
+  }
+
+  .dropdown-item:active {
+    background-color: #e9ecef !important;
+  }
+
+  .dropdown-divider {
+    margin: 8px 16px !important;
+    border-color: rgba(0, 0, 0, 0.1) !important;
+  }
+
+  /* Clean styling for the "List Your Space" item in dropdown */
+  .dropdown-item[href="/listings/new"] {
+    background: #f8f9fa !important;
+    color: #333 !important;
+    font-weight: 600 !important;
+    margin-top: 4px !important;
+    border-radius: 4px !important;
+    border: 1px solid #e9ecef !important;
+  }
+
+  .dropdown-item[href="/listings/new"]:hover {
+    background: #e9ecef !important;
+    color: #333 !important;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .nav-link {
+      padding: 6px 12px !important;
+      margin: 2px 0 !important;
+    }
+    
+    .navbar-collapse {
+      margin-top: 10px !important;
+      border-top: 1px solid #e9ecef !important;
+      padding-top: 10px !important;
+    }
+
+    .host-btn {
+      padding: 10px 16px !important;
+      font-size: 14px !important;
+      margin-top: 8px !important;
+      text-align: center !important;
+    }
+  }
+
+  /* Ensure proper spacing */
+  .navbar-nav {
+    align-items: center !important;
+  }
+
+  .d-flex {
+    align-items: center !important;
+  }
+
+  /* Mobile menu animations */
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+  }
+
+  /* Enhanced mobile menu styling */
+  .navbar-collapse {
+    transition: all 0.3s ease !important;
+  }
+
+  /* Fix for mobile menu items */
+  @media (max-width: 767px) {
+    .navbar-collapse.show {
+      animation: slideDown 0.3s ease-out;
+    }
+    
+    .navbar-nav .dropdown-menu {
+      border: none !important;
+      box-shadow: none !important;
+      background: transparent !important;
+      margin-left: 15px !important;
+    }
+    
+    .navbar-nav .dropdown-item {
+      color: #333 !important;
+      padding: 8px 16px !important;
+    }
+  }
+</style>
+
+<nav class="navbar navbar-expand-md bg-white border-bottom sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/listings">
+      <i class="fa-regular fa-compass"></i>WanderLust
+    </a>
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <div class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle explore-btn" href="#" id="exploreDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Explore
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="exploreDropdown">
+            <li><a class="dropdown-item" href="/listings">All Listings</a></li>
+            <li><a class="dropdown-item" href="#" onclick="scrollToFilters()">Categories</a></li>
+            <li><a class="dropdown-item" href="#" onclick="focusSearchInput()">Search</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="/listings/new">List Your Space</a></li>
+            <% if (typeof currUser !== 'undefined' && currUser) { %>
+              <li><a class="dropdown-item" href="/bookings">My Bookings</a></li>
+            <% } %>
+          </ul>
+        </div>
+      </div>
+
+      <div class="navbar-nav ms-auto">
+        <a class="nav-link host-btn" href="/listings/new">
+          <span>List Your Space</span>
+        </a>
+
+        <% if (typeof currUser === 'undefined' || !currUser) { %>
+          <a class="nav-link" href="/signup"><b>Sign Up</b></a>
+          <a class="nav-link" href="/login"><b>Login</b></a>
+        <% } else { %>
+          <a class="nav-link" href="/bookings"><b>My Bookings</b></a>
+          <a class="nav-link" href="/logout"><b>Log out</b></a>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</nav>
