@@ -163,35 +163,6 @@ This project follows **industry-standard MVC (Model-View-Controller) architectur
 
 ---
 
-## ⚙️ Configuration
-
-Create a `.env` file in the root directory with the following variables:
-
-```env
-# Database Configuration
-ATLASDB_URL=mongodb://localhost:27017/wanderlust
-# Or for MongoDB Atlas:
-# ATLASDB_URL=mongodb+srv://username:password@cluster.mongodb.net/wanderlust
-
-# Session Secret
-SECRET=your-super-secret-session-key
-
-# Email Configuration (for password reset)
-EMAIL_USER=your-email@gmail.com
-EMAIL_PASS=your-app-password
-
-# Application URL
-BASE_URL=http://localhost:8080
-
-# Payment Gateway (Optional - for booking functionality)
-RAZORPAY_KEY_ID=your-razorpay-key-id
-RAZORPAY_KEY_SECRET=your-razorpay-secret
-
-# Cloudinary (Optional - for image uploads)
-CLOUDINARY_CLOUD_NAME=your-cloud-name
-CLOUDINARY_API_KEY=your-api-key
-CLOUDINARY_API_SECRET=your-api-secret
-```
 
 ### 📧 Email Setup (Gmail)
 1. Enable 2-Factor Authentication on your Gmail account
@@ -236,22 +207,22 @@ CLOUDINARY_API_SECRET=your-api-secret
 ```
 WanderLust/
 ├── 📱 src/                          # Source code
-│   ├── 🎯 app/                      # Core application
-│   │   ├── 🎮 controllers/          # Business logic
-│   │   ├── 🗃️ models/               # Data schemas
-│   │   ├── 🛣️ routes/               # API endpoints
-│   │   ├── 🛡️ middleware/           # Auth & validation
-│   │   └── 🛠️ utils/                # Helper functions
-│   ├── ⚙️ config/                   # Configuration
-│   ├── 🗄️ database/                # DB initialization
-│   ├── 🌐 public/                   # Static assets
-│   └── 🎨 views/                    # EJS templates
-├── 📚 docs/                         # Documentation
-├── 🔧 scripts/                      # Automation scripts
-├── 📋 logs/                         # Application logs
-├── 🚀 app.js                        # Entry point
-├── 📦 package.json                  # Dependencies
-└── 📖 README.md                     # This file
+│   ├── app/                      # Core application
+│   │   ├── controllers/          # Business logic
+│   │   ├── models/               # Data schemas
+│   │   ├── routes/               # API endpoints
+│   │   ├── middleware/           # Auth & validation
+│   │   └── utils/                # Helper functions
+│   ├── config/                   # Configuration
+│   ├── database/                # DB initialization
+│   ├── public/                   # Static assets
+│   └── views/                    # EJS templates
+├── docs/                         # Documentation
+├── scripts/                      # Automation scripts
+├── logs/                         # Application logs
+├── app.js                        # Entry point
+├── package.json                  # Dependencies
+└── README.md                     # This file
 ```
 
 ---
@@ -334,7 +305,6 @@ npm start              # Start production server
 npm run dev            # Start development server with nodemon
 npm run seed           # Populate database with sample data
 npm test               # Run test suite (coming soon)
-npm run lint           # Run ESLint
 npm run format         # Format code with Prettier
 ```
 
@@ -350,10 +320,6 @@ npm install
 # Start development server with auto-reload
 npm run dev
 
-# In another terminal, start MongoDB (if using local)
-mongod
-```
-
 ### Production Deployment
 ```bash
 # Install production dependencies only
@@ -361,39 +327,6 @@ npm ci --only=production
 
 # Start production server
 npm start
-```
-
----
-
-## 🤝 Contributing
-
-We welcome contributions! Please follow these steps:
-
-1. **Fork** the repository
-2. **Create** a feature branch (`git checkout -b feature/AmazingFeature`)
-3. **Commit** your changes (`git commit -m 'Add some AmazingFeature'`)
-4. **Push** to the branch (`git push origin feature/AmazingFeature`)
-5. **Open** a Pull Request
-
-### 📝 Development Guidelines
-- Follow the existing code style
-- Add tests for new features
-- Update documentation as needed
-- Ensure all tests pass before submitting
-
----
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-**MongoDB Connection Error**
-```bash
-# Check if MongoDB is running
-mongod --version
-
-# Check connection string in .env
-ATLASDB_URL=mongodb://localhost:27017/wanderlust
 ```
 
 **Email Not Sending**
@@ -408,10 +341,6 @@ ATLASDB_URL=mongodb://localhost:27017/wanderlust
 # Verify Razorpay keys in .env
 # Check if keys are for correct environment (test/live)
 ```
-
-> 📖 **[View Detailed Troubleshooting Guide →](TROUBLESHOOTING.md)**
-
----
 
 ## 📄 License
 
@@ -428,18 +357,3 @@ This project is licensed under the **ISC License**. See the [LICENSE](LICENSE) f
 - **MongoDB Atlas** for cloud database hosting
 
 ---
-
-<div align="center">
-
-**🌟 Built with ❤️ using Industry-Standard MVC Architecture 🌟**
-
-*WanderLust - Your Gateway to Amazing Travel Experiences*
-
-[![GitHub stars](https://img.shields.io/github/stars/yourusername/wanderlust?style=social)](https://github.com/yourusername/wanderlust/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/yourusername/wanderlust?style=social)](https://github.com/yourusername/wanderlust/network)
-
----
-
-**[⬆ Back to Top](#-wanderlust---travel--adventure-platform)**
-
-</div>
