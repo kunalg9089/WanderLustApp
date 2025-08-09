@@ -4,19 +4,38 @@
   },
   "name": "wanderlust",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "A modern travel and adventure platform built with industry-standard MVC architecture using Node.js, Express, and MongoDB.",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node scripts/start.js",
     "dev": "nodemon app.js",
     "seed": "node src/database/index.js",
-    "prod": "NODE_ENV=production node app.js"
+    "prod": "NODE_ENV=production node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "travel",
+    "booking",
+    "nodejs",
+    "express",
+    "mongodb",
+    "mvc-architecture",
+    "passport",
+    "razorpay",
+    "cloudinary",
+    "ejs"
+  ],
+  "author": "Your Name <your.email@example.com>",
   "license": "ISC",
   "type": "commonjs",
-  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/wanderlust.git"
+  },
+  "homepage": "https://github.com/yourusername/wanderlust#readme",
+  "bugs": {
+    "url": "https://github.com/yourusername/wanderlust/issues"
+  },
   "dependencies": {
     "@mapbox/mapbox-sdk": "^0.16.1",
     "cloudinary": "^1.41.3",

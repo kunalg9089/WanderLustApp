@@ -1,184 +1,445 @@
 # 🌟 WanderLust - Travel & Adventure Platform
 
-A modern travel and adventure platform built with **industry-standard MVC architecture** using Node.js, Express, and MongoDB.
+<div align="center">
 
-> 📁 **[View Detailed Project Structure →](PROJECT_STRUCTURE.md)**
+![WanderLust Logo](https://img.shields.io/badge/WanderLust-Travel%20Platform-blue?style=for-the-badge&logo=compass&logoColor=white)
 
-## Features
+A modern, full-stack travel booking platform built with **industry-standard MVC architecture** using Node.js, Express, and MongoDB.
 
-- **User Authentication**: Sign up, login, and logout functionality
-- **Forgot Password**: Complete password reset functionality with email verification
-- **Modern UI**: Beautiful, responsive design with animations and gradients
-- **Listings**: Browse and manage travel listings
-- **Search & Filtering**: Advanced search and category filtering functionality
-- **Reviews**: Rate and review travel experiences
+[![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Express.js](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge)](https://expressjs.com/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
 
-## Search & Filtering Functionality
+</div>
 
-The application now includes comprehensive search and filtering capabilities:
+---
 
-### Search Features:
-- **Real-time Search**: Search listings by title, location, country, or description
-- **Debounced Input**: Automatic search after 500ms of typing (3+ characters)
-- **Search Results**: Clear display of search results with count
-- **No Results Handling**: User-friendly messages when no listings are found
+## 📋 Table of Contents
 
-### Category Filtering:
-- **12 Categories**: Trending, Rooms, Iconic Cities, Mountains, Castles, Arctic Pools, Camping, Farms, Arctic, Domes, Boats
-- **Active States**: Visual indication of currently selected category
-- **Combined Filtering**: Search and category filters work together
-- **Clear Filters**: Easy way to reset all filters
+- [✨ Features](#-features)
+- [🏗️ Architecture](#️-architecture)
+- [🚀 Quick Start](#-quick-start)
+- [🔧 Installation](#-installation)
+- [⚙️ Configuration](#️-configuration)
+- [🛠️ Tech Stack](#️-tech-stack)
+- [📁 Project Structure](#-project-structure)
+- [🌐 API Routes](#-api-routes)
+- [📱 Features Overview](#-features-overview)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
 
-### UI Features:
-- **Modern Search Bar**: Beautiful search input with clear button
-- **Category Buttons**: Interactive filter buttons with hover effects
-- **Results Counter**: Shows number of listings found
-- **Responsive Design**: Works perfectly on mobile and desktop
-- **Smooth Transitions**: Animated category switching
+---
 
-## Forgot Password Functionality
+## ✨ Features
 
-The application now includes a complete forgot password system with the following features:
+### 🔐 **Authentication & Security**
+- User registration and login with Passport.js
+- Password reset functionality with email verification
+- Session management with secure cookies
+- Input validation and sanitization
 
-### How it works:
-1. User clicks "Forgot your password?" on the login page
-2. User enters their email address
-3. System generates a secure reset token and sends an email
-4. User clicks the link in the email to reset their password
-5. User enters a new password and confirms it
-6. Password is updated and user can login with the new password
+### 🏠 **Property Management**
+- Create, edit, and delete property listings
+- Image upload with Cloudinary integration
+- Advanced search and filtering capabilities
+- Category-based property browsing
 
-### Email Setup
+### 💳 **Booking & Payments**
+- Secure payment processing with Razorpay
+- Real-time booking management
+- Payment verification and confirmation
+- Booking history and management
 
-To enable email functionality, you need to configure your email settings in the `.env` file:
+### ⭐ **Reviews & Ratings**
+- User reviews and ratings system
+- Review management (edit/delete own reviews)
+- Average rating calculations
+
+### 🎨 **Modern UI/UX**
+- Responsive design for all devices
+- Modern glass morphism design
+- Smooth animations and transitions
+- Professional authentication forms
+
+---
+
+## 🏗️ Architecture
+
+This project follows **industry-standard MVC (Model-View-Controller) architecture**:
+
+```
+📁 src/
+├── 🎮 app/                    # Core application logic
+│   ├── 📋 models/             # Data models (MongoDB schemas)
+│   ├── 🎨 views/              # EJS templates
+│   ├── 🎮 controllers/        # Business logic
+│   ├── 🛣️ routes/             # API endpoints
+│   ├── 🛡️ middleware/         # Authentication & validation
+│   ├── 🔧 services/           # Business services
+│   └── 🛠️ utils/              # Helper functions
+├── ⚙️ config/                 # Configuration files
+├── 🗄️ database/              # Database initialization
+├── 🌐 public/                # Static assets (CSS, JS, images)
+└── 🧪 tests/                 # Test suites
+```
+
+> 📖 **[View Detailed Architecture →](PROJECT_STRUCTURE.md)**
+
+---
+
+## 🚀 Quick Start
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/wanderlust.git
+   cd wanderlust
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   ```bash
+   cp .env.example .env
+   # Edit .env with your configuration
+   ```
+
+4. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+
+5. **Visit** `http://localhost:8080`
+
+---
+
+## 🔧 Installation
+
+### Prerequisites
+- **Node.js** (v16 or higher)
+- **MongoDB** (local or Atlas)
+- **npm** or **yarn**
+
+### Step-by-Step Setup
+
+1. **Clone & Install**
+   ```bash
+   git clone https://github.com/yourusername/wanderlust.git
+   cd wanderlust
+   npm install
+   ```
+
+2. **Database Setup**
+   ```bash
+   # Option 1: Use MongoDB Atlas (Recommended)
+   # Sign up at https://www.mongodb.com/atlas
+   # Create a cluster and get your connection string
+   
+   # Option 2: Use Local MongoDB
+   # Install MongoDB locally and start the service
+   ```
+
+3. **Environment Configuration**
+   ```bash
+   # Create environment file
+   cp .env.example .env
+   
+   # Edit .env file with your settings (see Configuration section)
+   ```
+
+4. **Sample Data (Optional)**
+   ```bash
+   # Populate database with sample listings
+   npm run seed
+   ```
+
+5. **Start Development Server**
+   ```bash
+   npm run dev
+   ```
+
+---
+
+## ⚙️ Configuration
+
+Create a `.env` file in the root directory with the following variables:
 
 ```env
-# Email Configuration (Gmail)
+# Database Configuration
+ATLASDB_URL=mongodb://localhost:27017/wanderlust
+# Or for MongoDB Atlas:
+# ATLASDB_URL=mongodb+srv://username:password@cluster.mongodb.net/wanderlust
+
+# Session Secret
+SECRET=your-super-secret-session-key
+
+# Email Configuration (for password reset)
 EMAIL_USER=your-email@gmail.com
 EMAIL_PASS=your-app-password
+
+# Application URL
 BASE_URL=http://localhost:8080
+
+# Payment Gateway (Optional - for booking functionality)
+RAZORPAY_KEY_ID=your-razorpay-key-id
+RAZORPAY_KEY_SECRET=your-razorpay-secret
+
+# Cloudinary (Optional - for image uploads)
+CLOUDINARY_CLOUD_NAME=your-cloud-name
+CLOUDINARY_API_KEY=your-api-key
+CLOUDINARY_API_SECRET=your-api-secret
 ```
 
-#### Gmail Setup Instructions:
+### 📧 Email Setup (Gmail)
+1. Enable 2-Factor Authentication on your Gmail account
+2. Generate an App Password:
+   - Go to Google Account Settings → Security → 2-Step Verification → App passwords
+   - Generate password for "Mail"
+   - Use this in `EMAIL_PASS`
 
-1. **Enable 2-Factor Authentication** on your Gmail account
-2. **Generate an App Password**:
-   - Go to Google Account settings
-   - Security → 2-Step Verification → App passwords
-   - Generate a new app password for "Mail"
-   - Use this password in your `EMAIL_PASS` environment variable
+### 💳 Payment Setup (Optional)
+1. Sign up at [Razorpay](https://razorpay.com/)
+2. Get your API keys from the dashboard
+3. Add keys to `.env` file
 
-3. **Alternative Email Services**:
-   - You can modify the email service in `utils/emailService.js`
-   - Supported services: Gmail, Outlook, Yahoo, etc.
+---
 
-### Security Features
+## 🛠️ Tech Stack
 
-- **Secure Tokens**: 32-byte random tokens for password reset
-- **Token Expiration**: Reset links expire after 1 hour
-- **One-time Use**: Tokens are invalidated after use
-- **Email Verification**: Only registered email addresses can request resets
+### Backend
+- **Node.js** - Runtime environment
+- **Express.js** - Web framework
+- **MongoDB** - NoSQL database
+- **Mongoose** - ODM for MongoDB
+- **Passport.js** - Authentication middleware
 
-## Installation
+### Frontend
+- **EJS** - Templating engine
+- **Bootstrap 5** - CSS framework
+- **Font Awesome** - Icons
+- **Custom CSS** - Modern design with animations
 
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd WanderLust
+### Services & Tools
+- **Cloudinary** - Image hosting and optimization
+- **Razorpay** - Payment processing
+- **Nodemailer** - Email sending
+- **Connect-Flash** - Flash messages
+- **Express-Session** - Session management
+
+---
+
+## 📁 Project Structure
+
+```
+WanderLust/
+├── 📱 src/                          # Source code
+│   ├── 🎯 app/                      # Core application
+│   │   ├── 🎮 controllers/          # Business logic
+│   │   ├── 🗃️ models/               # Data schemas
+│   │   ├── 🛣️ routes/               # API endpoints
+│   │   ├── 🛡️ middleware/           # Auth & validation
+│   │   └── 🛠️ utils/                # Helper functions
+│   ├── ⚙️ config/                   # Configuration
+│   ├── 🗄️ database/                # DB initialization
+│   ├── 🌐 public/                   # Static assets
+│   └── 🎨 views/                    # EJS templates
+├── 📚 docs/                         # Documentation
+├── 🔧 scripts/                      # Automation scripts
+├── 📋 logs/                         # Application logs
+├── 🚀 app.js                        # Entry point
+├── 📦 package.json                  # Dependencies
+└── 📖 README.md                     # This file
 ```
 
-2. Install dependencies:
+---
+
+## 🌐 API Routes
+
+### 🔐 Authentication
+```
+POST   /signup           Register new user
+POST   /login            User login
+GET    /logout           User logout
+POST   /forgot-password  Request password reset
+POST   /reset-password   Reset password with token
+```
+
+### 🏠 Listings
+```
+GET    /listings         Browse all listings (with search & filters)
+POST   /listings         Create new listing
+GET    /listings/new     New listing form
+GET    /listings/:id     View specific listing
+PUT    /listings/:id     Update listing
+DELETE /listings/:id     Delete listing
+GET    /listings/:id/edit Edit listing form
+```
+
+### ⭐ Reviews
+```
+POST   /listings/:id/reviews           Add review
+DELETE /listings/:id/reviews/:reviewId Delete review
+```
+
+### 💳 Bookings & Payments
+```
+POST   /api/payments/create-order      Create payment order
+POST   /api/payments/verify            Verify payment
+GET    /bookings                       User booking history
+```
+
+### 📜 Legal
+```
+GET    /privacy          Privacy policy
+GET    /terms            Terms of service
+```
+
+---
+
+## 📱 Features Overview
+
+### 🔍 **Search & Filtering**
+- **Real-time Search**: Search by title, location, or description
+- **Category Filters**: 12+ categories (Mountains, Beaches, Cities, etc.)
+- **Combined Filtering**: Search + category filters work together
+- **Smart Results**: Debounced search with result counts
+
+### 🎨 **Modern UI Design**
+- **Responsive Layout**: Mobile-first design approach
+- **Glass Morphism**: Modern translucent design elements
+- **Smooth Animations**: Hover effects and transitions
+- **Professional Forms**: Clean authentication interfaces
+
+### 🔒 **Security Features**
+- **Input Validation**: Server-side validation with Joi
+- **XSS Protection**: Input sanitization
+- **Secure Sessions**: HTTP-only cookies
+- **Password Hashing**: bcrypt encryption
+- **CSRF Protection**: Cross-site request forgery prevention
+
+### 📧 **Email System**
+- **Welcome Emails**: User registration confirmation
+- **Password Reset**: Secure token-based password recovery
+- **Booking Confirmations**: Email receipts for bookings
+
+---
+
+## 🚀 Available Scripts
+
 ```bash
+npm start              # Start production server
+npm run dev            # Start development server with nodemon
+npm run seed           # Populate database with sample data
+npm test               # Run test suite (coming soon)
+npm run lint           # Run ESLint
+npm run format         # Format code with Prettier
+```
+
+---
+
+## 🔧 Development Setup
+
+### Local Development
+```bash
+# Install dependencies
 npm install
+
+# Start development server with auto-reload
+npm run dev
+
+# In another terminal, start MongoDB (if using local)
+mongod
 ```
 
-3. Set up environment variables:
+### Production Deployment
 ```bash
-# Create .env file
-cp .env.example .env
+# Install production dependencies only
+npm ci --only=production
 
-# Add your configuration
-ATLASDB_URL=your-mongodb-connection-string
-SECRET=your-session-secret
-EMAIL_USER=your-email@gmail.com
-EMAIL_PASS=your-app-password
-BASE_URL=http://localhost:8080
-```
-
-4. Start the server:
-```bash
+# Start production server
 npm start
 ```
 
-## Sample Data Setup
+---
 
-To test the search and filtering functionality, you can populate your database with sample listings:
+## 🤝 Contributing
 
+We welcome contributions! Please follow these steps:
+
+1. **Fork** the repository
+2. **Create** a feature branch (`git checkout -b feature/AmazingFeature`)
+3. **Commit** your changes (`git commit -m 'Add some AmazingFeature'`)
+4. **Push** to the branch (`git push origin feature/AmazingFeature`)
+5. **Open** a Pull Request
+
+### 📝 Development Guidelines
+- Follow the existing code style
+- Add tests for new features
+- Update documentation as needed
+- Ensure all tests pass before submitting
+
+---
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+**MongoDB Connection Error**
 ```bash
-# Run the sample data script
-node init/populateSampleData.js
+# Check if MongoDB is running
+mongod --version
+
+# Check connection string in .env
+ATLASDB_URL=mongodb://localhost:27017/wanderlust
 ```
 
-This will add 12 sample listings across different categories to help you test the functionality.
+**Email Not Sending**
+```bash
+# Verify email configuration in .env
+# Ensure Gmail app password is correct
+# Check less secure app access settings
+```
 
-## UI Features
+**Payment Integration Issues**
+```bash
+# Verify Razorpay keys in .env
+# Check if keys are for correct environment (test/live)
+```
 
-### Modern Design Elements:
-- **Gradient Backgrounds**: Beautiful purple-blue gradients
-- **Glass Morphism**: Translucent cards with backdrop blur
-- **Floating Animations**: Subtle floating shapes in the background
-- **Smooth Transitions**: Hover effects and button animations
-- **Password Strength Indicator**: Visual feedback for password strength
-- **Show/Hide Password**: Toggle password visibility
-- **Loading States**: Button loading animations during form submission
+> 📖 **[View Detailed Troubleshooting Guide →](TROUBLESHOOTING.md)**
 
-### Responsive Design:
-- Mobile-friendly layouts
-- Flexible card designs
-- Touch-friendly buttons and inputs
+---
 
-## Routes
+## 📄 License
 
-### Authentication Routes:
-- `GET /login` - Login page
-- `POST /login` - Login form submission
-- `GET /signup` - Signup page
-- `POST /signup` - Signup form submission
-- `GET /logout` - Logout user
+This project is licensed under the **ISC License**. See the [LICENSE](LICENSE) file for details.
 
-### Forgot Password Routes:
-- `GET /forgot-password` - Forgot password page
-- `POST /forgot-password` - Request password reset
-- `GET /reset-password/:token` - Reset password page
-- `POST /reset-password/:token` - Reset password form submission
+---
 
-### Listings Routes:
-- `GET /listings` - Browse all listings (with search & filtering)
-- `GET /listings/new` - Create new listing form
-- `POST /listings` - Create new listing
-- `GET /listings/:id` - View individual listing
-- `GET /listings/:id/edit` - Edit listing form
-- `PUT /listings/:id` - Update listing
-- `DELETE /listings/:id` - Delete listing
+## 🙏 Acknowledgments
 
-## Technologies Used
+- **Bootstrap** for the responsive UI framework
+- **Font Awesome** for beautiful icons
+- **Cloudinary** for image hosting solutions
+- **Razorpay** for secure payment processing
+- **MongoDB Atlas** for cloud database hosting
 
-- **Backend**: Node.js, Express.js, MongoDB, Mongoose
-- **Authentication**: Passport.js, Passport-Local-Mongoose
-- **Email**: Nodemailer
-- **Frontend**: EJS templates, CSS3, JavaScript
-- **Styling**: Custom CSS with modern design patterns
-- **Security**: bcrypt (via passport-local-mongoose), crypto for tokens
-- **Search**: MongoDB text search with regex patterns
+---
 
-## Contributing
+<div align="center">
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
+**🌟 Built with ❤️ using Industry-Standard MVC Architecture 🌟**
 
-## License
+*WanderLust - Your Gateway to Amazing Travel Experiences*
 
-This project is licensed under the ISC License. 
+[![GitHub stars](https://img.shields.io/github/stars/yourusername/wanderlust?style=social)](https://github.com/yourusername/wanderlust/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/yourusername/wanderlust?style=social)](https://github.com/yourusername/wanderlust/network)
+
+---
+
+**[⬆ Back to Top](#-wanderlust---travel--adventure-platform)**
+
+</div>
