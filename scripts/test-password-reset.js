@@ -1,75 +1,72 @@
 const nodemailer = require('nodemailer');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
-// Create a transporter using Gmail SMTP
-const createTransporter = () => {
-    // Check if email configuration is available
-    if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
-        console.warn('⚠️  Email configuration not found. Please set up SMTP_USER and SMTP_PASS in your .env file.');
-        return null;
+console.log('🧪 Testing Password Reset Email Functionality...');
+console.log('===============================================');
+
+// Test email configuration
+const testEmail = 'kunalgaikwad5533@gmail.com'; // Your email for testing
+
+// Create transporter
+const transporter = nodemailer.createTransport({
+    host: process.env.SMTP_HOST || 'smtp.gmail.com',
+    port: process.env.SMTP_PORT || 587,
+    secure: false,
+    auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS
     }
+});
 
-    // For production (Render), use different configuration
-    if (process.env.NODE_ENV === 'production') {
-        return nodemailer.createTransport({
-            host: process.env.SMTP_HOST || 'smtp.gmail.com',
-            port: process.env.SMTP_PORT || 587,
-            secure: false,
-            auth: {
-                user: process.env.SMTP_USER,
-                pass: process.env.SMTP_PASS
-            },
-            tls: {
-                rejectUnauthorized: false
-            }
-        });
-    }
-
-    // For development
-    return nodemailer.createTransport({
-        host: process.env.SMTP_HOST || 'smtp.gmail.com',
-        port: process.env.SMTP_PORT || 587,
-        secure: false,
-        auth: {
-            user: process.env.SMTP_USER,
-            pass: process.env.SMTP_PASS
-        }
-    });
+// Generate a test reset token
+const generateTestToken = () => {
+    const payload = {
+        userId: 'test-user-id',
+        email: testEmail,
+        type: 'password_reset'
+    };
+    
+    const options = {
+        expiresIn: '15m',
+        issuer: 'wanderlust',
+        audience: 'wanderlust_users'
+    };
+    
+    return jwt.sign(payload, process.env.JWT_SECRET, options);
 };
 
-// Send password reset email
-const sendPasswordResetEmail = async (email, resetToken) => {
+// Test password reset email
+async function testPasswordResetEmail() {
     try {
-        const transporter = createTransporter();
+        console.log('📧 Testing password reset email...');
+        console.log(`📬 Sending to: ${testEmail}`);
+        console.log(`🌐 Base URL: ${process.env.BASE_URL || 'http://localhost:8081'}`);
+        console.log('');
         
-        // If transporter is null, email is not configured
-        if (!transporter) {
-            console.error('❌ Email configuration error: SMTP_USER or SMTP_PASS not set in .env file');
-            console.error('Please set up SMTP configuration in your .env file');
-            return false; // Return false to show error to user
-        }
-        
+        const resetToken = generateTestToken();
         const resetUrl = `${process.env.BASE_URL || 'http://localhost:8081'}/reset-password?token=${resetToken}`;
+        
+        console.log('🔗 Reset URL:', resetUrl);
+        console.log('');
         
         const mailOptions = {
             from: process.env.SMTP_USER,
-            to: email,
-            subject: 'Reset Your WanderLust Password',
+            to: testEmail,
+            subject: '🧪 Test: Reset Your WanderLust Password',
             html: `
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px;">
                     <div style="text-align: center; margin-bottom: 30px;">
-                        <h1 style="margin: 0; font-size: 28px; color: #fff;">🌍 WanderLust</h1>
-                        <p style="margin: 10px 0; opacity: 0.9;">Your Adventure Awaits</p>
+                        <h1 style="margin: 0; font-size: 28px; color: #fff;">🧪 TEST EMAIL</h1>
+                        <h2 style="margin: 0; font-size: 24px; color: #fff;">🌍 WanderLust</h2>
+                        <p style="margin: 10px 0; opacity: 0.9;">Password Reset Test</p>
                     </div>
                     
                     <div style="background: rgba(255, 255, 255, 0.1); padding: 30px; border-radius: 8px; backdrop-filter: blur(10px);">
                         <h2 style="margin: 0 0 20px 0; color: #fff;">Password Reset Request</h2>
                         
                         <p style="margin: 0 0 20px 0; line-height: 1.6;">
-                            Hello! We received a request to reset your password for your WanderLust account.
-                        </p>
-                        
-                        <p style="margin: 0 0 20px 0; line-height: 1.6;">
-                            If you didn't make this request, you can safely ignore this email.
+                            This is a TEST email for password reset functionality.
                         </p>
                         
                         <div style="text-align: center; margin: 30px 0;">
@@ -83,7 +80,7 @@ const sendPasswordResetEmail = async (email, resetToken) => {
                         </div>
                         
                         <p style="margin: 20px 0 0 0; font-size: 14px; opacity: 0.8;">
-                            This link will expire in 1 hour for security reasons.
+                            This link will expire in 15 minutes for security reasons.
                         </p>
                         
                         <p style="margin: 10px 0 0 0; font-size: 14px; opacity: 0.8;">
@@ -104,14 +101,23 @@ const sendPasswordResetEmail = async (email, resetToken) => {
         };
 
         const info = await transporter.sendMail(mailOptions);
-        console.log('✅ Password reset email sent:', info.messageId);
-        return true;
+        
+        console.log('✅ Password reset test email sent successfully!');
+        console.log(`📧 Message ID: ${info.messageId}`);
+        console.log('');
+        console.log('🎯 Password reset functionality is working!');
+        console.log('📬 Check your email for the test password reset link');
+        console.log('');
+        console.log('🚀 Your application is ready for password reset testing');
+        console.log('🌐 Visit: http://localhost:8081/forgot-password');
+        
     } catch (error) {
-        console.error('❌ Error sending password reset email:', error);
-        return false;
+        console.log('❌ Password reset test failed!');
+        console.log('Error:', error.message);
+        console.log('');
+        console.log('🔧 Check your email configuration in .env file');
     }
-};
+}
 
-module.exports = {
-    sendPasswordResetEmail
-}; 
+testPasswordResetEmail();
+

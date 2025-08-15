@@ -1,6 +1,7 @@
 const User = require("../models/user");
-const crypto = require('crypto');
+const bcrypt = require('bcrypt');
 const { sendPasswordResetEmail } = require('../utils/emailService');
+const { generateResetToken, verifyResetToken } = require('../utils/jwtService');
 
 module.exports.renderSignupForm = (req,res) => {
     res.render("users/signup.ejs");
@@ -10,6 +11,21 @@ module.exports.signup = async (req,res) => {
 
     try{
     let {username,email,password} = req.body;
+    
+    // Password strength validation
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!passwordRegex.test(password)) {
+        req.flash("error", "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&)");
+        return res.redirect("/signup");
+    }
+
+    // Check for common weak passwords
+    const weakPasswords = ['password', '123456', '123456789', 'qwerty', 'abc123', 'password123', 'admin', 'demo', 'test', 'guest'];
+    if (weakPasswords.includes(password.toLowerCase())) {
+        req.flash("error", "Please choose a stronger password. This password is too common and easily guessable.");
+        return res.redirect("/signup");
+    }
+
     const newUser = new User({email,username});
     const registeredUser = await User.register(newUser,password);
     console.log(User.registeredUser);
@@ -60,22 +76,16 @@ module.exports.forgotPassword = async (req, res) => {
             return res.redirect("/forgot-password");
         }
 
-        // Generate reset token
-        const resetToken = crypto.randomBytes(32).toString('hex');
-        const resetTokenExpiry = Date.now() + 3600000; // 1 hour
-
-        // Save token to user
-        user.resetPasswordToken = resetToken;
-        user.resetPasswordExpires = resetTokenExpiry;
-        await user.save();
+        // Generate JWT reset token
+        const resetToken = generateResetToken(user._id, email);
 
         // Send email
         const emailSent = await sendPasswordResetEmail(email, resetToken);
         
         if (emailSent) {
-            req.flash("success", "Password reset email sent! Check your inbox.");
+            req.flash("success", "Password reset link is sent. Please check your Gmail");
         } else {
-            req.flash("error", "Failed to send reset email. Please try again.");
+            req.flash("error", "Failed to send reset email. Please check your email configuration.");
         }
         
         res.redirect("/forgot-password");
@@ -94,14 +104,26 @@ module.exports.renderForgotPasswordForm = (req, res) => {
 // Render reset password form
 module.exports.renderResetPasswordForm = async (req, res) => {
     try {
-        const { token } = req.params;
-        const user = await User.findOne({
-            resetPasswordToken: token,
-            resetPasswordExpires: { $gt: Date.now() }
-        });
+        const { token } = req.query;
+        
+        if (!token) {
+            req.flash("error", "Password reset token is missing.");
+            return res.redirect("/forgot-password");
+        }
 
+        // Verify JWT token
+        const tokenVerification = verifyResetToken(token);
+        
+        if (!tokenVerification.valid) {
+            req.flash("error", `Password reset token is ${tokenVerification.error}.`);
+            return res.redirect("/forgot-password");
+        }
+
+        // Find user by ID from token
+        const user = await User.findById(tokenVerification.userId);
+        
         if (!user) {
-            req.flash("error", "Password reset token is invalid or has expired.");
+            req.flash("error", "User not found.");
             return res.redirect("/forgot-password");
         }
 
@@ -116,28 +138,46 @@ module.exports.renderResetPasswordForm = async (req, res) => {
 // Reset Password
 module.exports.resetPassword = async (req, res) => {
     try {
-        const { token } = req.params;
+        const { token } = req.body;
         const { password, confirmPassword } = req.body;
 
         if (password !== confirmPassword) {
             req.flash("error", "Passwords do not match.");
-            return res.redirect(`/reset-password/${token}`);
+            return res.redirect(`/reset-password?token=${token}`);
         }
 
-        const user = await User.findOne({
-            resetPasswordToken: token,
-            resetPasswordExpires: { $gt: Date.now() }
-        });
+        // Password strength validation
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!passwordRegex.test(password)) {
+            req.flash("error", "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&)");
+            return res.redirect(`/reset-password?token=${token}`);
+        }
 
-        if (!user) {
-            req.flash("error", "Password reset token is invalid or has expired.");
+        // Check for common weak passwords
+        const weakPasswords = ['password', '123456', '123456789', 'qwerty', 'abc123', 'password123', 'admin', 'demo', 'test', 'guest'];
+        if (weakPasswords.includes(password.toLowerCase())) {
+            req.flash("error", "Please choose a stronger password. This password is too common and easily guessable.");
+            return res.redirect(`/reset-password?token=${token}`);
+        }
+
+        // Verify JWT token
+        const tokenVerification = verifyResetToken(token);
+        
+        if (!tokenVerification.valid) {
+            req.flash("error", `Password reset token is ${tokenVerification.error}.`);
             return res.redirect("/forgot-password");
         }
 
-        // Set new password
+        // Find user by ID from token
+        const user = await User.findById(tokenVerification.userId);
+        
+        if (!user) {
+            req.flash("error", "User not found.");
+            return res.redirect("/forgot-password");
+        }
+
+        // Set new password using passport-local-mongoose
         await user.setPassword(password);
-        user.resetPasswordToken = undefined;
-        user.resetPasswordExpires = undefined;
         await user.save();
 
         req.flash("success", "Your password has been reset successfully!");

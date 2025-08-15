@@ -335,11 +335,11 @@
                 <div class="listing-info">
                     <div class="info-item">
                         <h4>Owner</h4>
-                        <p>@<%= listing.owner.username %></p>
+                        <p>@<%= listing.owner ? listing.owner.username : 'WanderLust Admin' %></p>
                     </div>
                     <div class="info-item price-item">
                         <h4>Price per Night</h4>
-                        <p>₹<%= listing.price.toLocaleString("en-IN") %></p>
+                        <p>₹<%= listing.price ? listing.price.toLocaleString("en-IN") : 'N/A' %></p>
                     </div>
                     <div class="info-item">
                         <h4>Location</h4>
@@ -435,4 +435,4 @@
     </div>
 </div>
 
-<script src="/assets/js/map.js"></script>
+<script src="/assets/js/map.js?v=4.0"></script>

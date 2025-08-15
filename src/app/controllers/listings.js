@@ -1,7 +1,16 @@
 const Listing = require("../models/listing");
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const mapToken = process.env.MAP_TOKEN;
-const geocodingClient = mbxGeocoding({ accessToken: mapToken });
+
+// Only create geocoding client if MAP_TOKEN exists
+let geocodingClient = null;
+if (mapToken && mapToken !== "undefined" && mapToken !== "") {
+    try {
+        geocodingClient = mbxGeocoding({ accessToken: mapToken });
+    } catch (error) {
+        console.warn("Failed to create Mapbox geocoding client:", error.message);
+    }
+}
 
 
 module.exports.index = async (req, res) => {
@@ -53,26 +62,59 @@ module.exports.showListing = async (req, res) => {
 }
 
 
-module.exports.createListing = async (req, res,next) => {
-let response = await geocodingClient.forwardGeocode({
-  query: req.body.listing.location,
-  limit: 1
-})
-  .send()
-    let url = req.file.path;
-    let filename = req.file.filename;
-    const { listing } = req.body;
-  
-    const newListing =new Listing(req.body.listing);
-    newListing.owner = req.user._id;
-    newListing.image = {url,filename};
-    newListing.geometry = response.body.features[0].geometry;
+module.exports.createListing = async (req, res, next) => {
+    try {
+        let url = req.file.path;
+        let filename = req.file.filename;
+        const { listing } = req.body;
+        
+        const newListing = new Listing(req.body.listing);
+        newListing.owner = req.user._id;
+        newListing.image = { url, filename };
+        
+        // Only use geocoding if client is available
+        if (geocodingClient) {
+            try {
+                let response = await geocodingClient.forwardGeocode({
+                    query: req.body.listing.location,
+                    limit: 1
+                }).send();
+                
+                if (response.body.features && response.body.features.length > 0) {
+                    newListing.geometry = response.body.features[0].geometry;
+                } else {
+                    // Fallback geometry if geocoding fails
+                    newListing.geometry = {
+                        type: 'Point',
+                        coordinates: [0, 0]
+                    };
+                }
+            } catch (geocodingError) {
+                console.warn("Geocoding failed:", geocodingError.message);
+                // Fallback geometry
+                newListing.geometry = {
+                    type: 'Point',
+                    coordinates: [0, 0]
+                };
+            }
+        } else {
+            // Fallback geometry when no geocoding client
+            newListing.geometry = {
+                type: 'Point',
+                coordinates: [0, 0]
+            };
+        }
 
-    let savedlisting = await newListing.save();
-    console.log(savedlisting);
-    req.flash("success", "New Listing Created!");
-    res.redirect("/listings");
-  };
+        let savedlisting = await newListing.save();
+        console.log(savedlisting);
+        req.flash("success", "New Listing Created!");
+        res.redirect("/listings");
+    } catch (error) {
+        console.error("Error creating listing:", error);
+        req.flash("error", "Failed to create listing. Please try again.");
+        res.redirect("/listings/new");
+    }
+};
 
 
 module.exports.renderEditForm = async (req, res) => {
@@ -149,7 +191,7 @@ module.exports.updateListing = async (req, res) => {
         // Only update geometry if location changed and geocoding is available
         if (req.body.listing.location && 
             req.body.listing.location !== listing.location && 
-            mapToken) {
+            geocodingClient) {
             try {
                 console.log('Updating geometry for new location:', req.body.listing.location);
                 const response = await geocodingClient.forwardGeocode({

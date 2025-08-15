@@ -4,22 +4,35 @@ const Booking = require('../models/booking');
 const Listing = require('../models/listing');
 
 // Check if Razorpay keys are configured
-if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
-    console.error('❌ Razorpay keys not configured! Please add RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET to your .env file');
+const razorpayConfigured = process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET;
+
+let razorpay = null;
+
+if (!razorpayConfigured) {
+    console.warn('⚠️ Razorpay keys not configured! Payment functionality will be disabled.');
+    console.log('🔧 To enable payments, add RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET to your environment variables');
 } else {
     console.log('✅ Razorpay keys configured successfully');
+    // Initialize Razorpay
+    razorpay = new Razorpay({
+        key_id: process.env.RAZORPAY_KEY_ID,
+        key_secret: process.env.RAZORPAY_KEY_SECRET,
+    });
 }
-
-// Initialize Razorpay
-const razorpay = new Razorpay({
-    key_id: process.env.RAZORPAY_KEY_ID,
-    key_secret: process.env.RAZORPAY_KEY_SECRET,
-});
 
 // Create Razorpay order
 module.exports.createOrder = async (req, res) => {
     try {
         console.log('📝 Creating order with data:', req.body);
+        
+        // Check if Razorpay is configured
+        if (!razorpayConfigured) {
+            return res.status(503).json({
+                success: false,
+                message: 'Payment service is currently unavailable. Please try again later.',
+                error: 'Razorpay not configured'
+            });
+        }
         
         const { listingId, checkIn, checkOut, guestCount, specialRequests } = req.body;
         
@@ -124,6 +137,15 @@ module.exports.createOrder = async (req, res) => {
 // Verify payment and update booking
 module.exports.verifyPayment = async (req, res) => {
     try {
+        // Check if Razorpay is configured
+        if (!razorpayConfigured) {
+            return res.status(503).json({
+                success: false,
+                message: 'Payment service is currently unavailable.',
+                error: 'Razorpay not configured'
+            });
+        }
+        
         const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
 
         // Verify signature

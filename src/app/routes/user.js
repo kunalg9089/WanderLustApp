@@ -24,7 +24,7 @@ router.route("/forgot-password")
 .get(userController.renderForgotPasswordForm)
 .post(wrapAsync(userController.forgotPassword));
 
-router.route("/reset-password/:token")
+router.route("/reset-password")
 .get(userController.renderResetPasswordForm)
 .post(wrapAsync(userController.resetPassword));
 

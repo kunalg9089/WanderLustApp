@@ -199,8 +199,22 @@ img {
     /* Ensure proper containment */
     overflow: visible;
     box-sizing: border-box;
-    /* Proper padding to accommodate close button */
-    padding: 1rem 1rem 1rem 1rem;
+    /* Proper padding */
+    padding: 1rem;
+    /* Smooth transitions for closing */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+}
+
+/* Clickable alert styling */
+.clickable-alert {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.clickable-alert:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
 }
 
 .alert-success {
@@ -231,51 +245,14 @@ img {
     padding-right: 3rem;
 }
 
-.btn-close {
-    position: absolute;
-    top: 0.75rem;
-    right: 0.75rem;
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    font-size: 1rem;
-    font-weight: bold;
-    color: #666;
-    opacity: 0.8;
-    cursor: pointer;
-    padding: 0;
-    width: 1.5rem;
-    height: 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition: all 0.2s ease;
-    /* Ensure button stays within alert boundaries */
-    box-sizing: border-box;
-    z-index: 1;
-}
-
-.btn-close:hover {
-    opacity: 1;
-    background-color: rgba(255, 255, 255, 1);
-    transform: scale(1.1);
-    color: #333;
-}
-
-.btn-close:focus {
-    outline: none;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-}
-
-.btn-close span {
-    line-height: 1;
-    font-size: 0.875rem;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
+/* Completely hide all close buttons in alerts */
+.alert .btn-close,
+.alert .custom-close-btn,
+.alert-dismissible .btn-close {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
 }
 
 @keyframes slideDown {
@@ -315,6 +292,16 @@ img {
     align-items: center;
 }
 
+/* Completely override Bootstrap's default close button for our alerts */
+.flash-messages-container .btn-close {
+    background-image: none !important;
+    background-size: auto !important;
+    &::before,
+    &::after {
+        display: none !important;
+    }
+}
+
 /* Alert Text Styling */
 .alert-text {
     display: block;
@@ -323,9 +310,20 @@ img {
     line-height: 1.4;
     margin: 0;
     padding: 0;
-    /* Ensure text doesn't overlap with close button */
-    padding-right: 2rem;
     box-sizing: border-box;
+    position: relative;
+}
+
+/* Add subtle indicator that alert is clickable */
+.clickable-alert .alert-text::after {
+    content: "Click to dismiss";
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 0.75rem;
+    opacity: 0.6;
+    font-weight: normal;
+    pointer-events: none;
 }
 
 /* Ensure alert content doesn't overlap with close button */
@@ -336,7 +334,7 @@ img {
 }
 
 .alert.alert-dismissible .alert-text {
-    padding-right: 2rem;
+    padding-right: 0;
     margin-right: 0;
 }
 
@@ -360,19 +358,16 @@ img {
     
     .alert-text {
         width: 100%;
-        padding-right: 1.5rem;
+        padding-right: 0;
     }
     
-    .btn-close {
-        top: 0.5rem;
-        right: 0.5rem;
-        width: 1.25rem;
-        height: 1.25rem;
-        font-size: 0.75rem;
-    }
-    
-    .btn-close span {
-        font-size: 0.75rem;
+    .alert .btn-close,
+    .alert .custom-close-btn,
+    .alert-dismissible .btn-close {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
     }
 }
 

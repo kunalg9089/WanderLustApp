@@ -20,8 +20,23 @@ async function main() {
 const initDB = async () => {
   try {
     await Listing.deleteMany({}); // Clear existing listings
-    await Listing.insertMany(initData.data); // Insert seed listings
-    console.log("Data was inititlaized successfully.");
+    
+    // Default user ID (created by create-default-user.js script)
+    const defaultUserId = "689ed5fb9db92c83fd86f964";
+    
+    // Add required geometry field and owner to each listing
+    const listingsWithGeometry = initData.data.map(listing => ({
+      ...listing,
+      owner: defaultUserId,
+      geometry: {
+        type: 'Point',
+        coordinates: [0, 0] // Default coordinates - you can update these later
+      }
+    }));
+    
+    await Listing.insertMany(listingsWithGeometry); // Insert seed listings
+    console.log("Data was initialized successfully.");
+    console.log(`Added ${listingsWithGeometry.length} listings with owner ID: ${defaultUserId}`);
   } catch (error) {
     console.error("Error seeding database:", error);
   } finally {

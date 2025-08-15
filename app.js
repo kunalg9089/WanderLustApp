@@ -1,6 +1,5 @@
-if (process.env.NODE_ENV !== "production") {
-    require("dotenv").config();
-}
+// Load environment variables
+require("dotenv").config();
 
 const express = require("express");
 const app = express();
@@ -26,6 +25,11 @@ const paymentRouter = require("./src/app/routes/payment.js");
 
 // MongoDB Connection
 const dbUrl = process.env.ATLASDB_URL;
+console.log("🔍 Environment check:");
+console.log("- ATLASDB_URL:", process.env.ATLASDB_URL ? "Set" : "Not set");
+console.log("- SECRET:", process.env.SECRET ? "Set" : "Not set");
+console.log("- MAP_TOKEN:", process.env.MAP_TOKEN ? "Set" : "Not set");
+console.log("- PORT:", process.env.PORT || "8081 (default)");
 
 main()
     .then(() => {
@@ -70,6 +74,19 @@ app.use(express.static(path.join(__dirname, "src/public"), {
     }
 }));
 
+// 🚀 Render-compatible favicon serving
+app.get('/favicon.ico', (req, res) => {
+    res.setHeader('Content-Type', 'image/x-icon');
+    res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    res.sendFile(path.join(__dirname, 'src/public/favicon.ico'));
+});
+
+app.get('/favicon.svg', (req, res) => {
+    res.setHeader('Content-Type', 'image/svg+xml');
+    res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    res.sendFile(path.join(__dirname, 'src/public/favicon.svg'));
+});
+
 app.use("/uploads", express.static("uploads", {
     maxAge: '1y',
     setHeaders: (res, path) => {
@@ -78,17 +95,23 @@ app.use("/uploads", express.static("uploads", {
 })); // serve image files if any
 
 // Session Store
-const store = MongoStore.create({
-    mongoUrl: dbUrl,
-    crypto: {
-        secret: process.env.SECRET,
-    },
-    touchAfter: 24 * 3600, // 1 day
-});
+let store;
+if (dbUrl) {
+    store = MongoStore.create({
+        mongoUrl: dbUrl,
+        crypto: {
+            secret: process.env.SECRET,
+        },
+        touchAfter: 24 * 3600, // 1 day
+    });
 
-store.on("error", (err) => {
-    console.log("ERROR IN MONGO SESSION STORE", err);
-});
+    store.on("error", (err) => {
+        console.log("ERROR IN MONGO SESSION STORE", err);
+    });
+} else {
+    console.warn("⚠️ MongoDB URL not found. Using memory store for sessions.");
+    store = new session.MemoryStore();
+}
 
 const sessionOptions = {
     store,
@@ -152,6 +175,7 @@ app.use((err, req, res, next) => {
 });
 
 // Server Start
-app.listen(8080, () => {
-    console.log("Server is listening on port 8080");
+const port = process.env.PORT || 8081;
+app.listen(port, () => {
+    console.log(`Server is listening on port ${port}`);
 });

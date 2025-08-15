@@ -104,3 +104,4 @@ If you have questions about contributing:
 - Be respectful and patient while waiting for responses
 
 Thank you for helping make WanderLust better! 🌟
+
