@@ -327,14 +327,7 @@ npm ci --only=production
 
 # Start production server
 npm start
-```
 
-**Email Not Sending**
-```bash
-# Verify email configuration in .env
-# Ensure Gmail app password is correct
-# Check less secure app access settings
-```
 
 **Payment Integration Issues**
 ```bash
@@ -342,11 +335,6 @@ npm start
 # Check if keys are for correct environment (test/live)
 ```
 
-## 📄 License
-
-This project is licensed under the **ISC License**. See the [LICENSE](LICENSE) file for details.
-
----
 
 ## 🙏 Acknowledgments
 
