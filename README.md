@@ -84,8 +84,6 @@ This project follows **industry-standard MVC (Model-View-Controller) architectur
 └── 🧪 tests/                 # Test suites
 ```
 
-> 📖 **[View Detailed Architecture →](PROJECT_STRUCTURE.md)**
-
 ---
 
 ## 🚀 Quick Start
